@@ -596,11 +596,11 @@
         </g>
 
         <!-- stage regions: hover shows the border, click opens the stage; also lit when the talk returns to the map -->
-        <g class="sframe" data-goto="5" data-minstep="1" tabindex="0" role="link" aria-label="Stage 1, Submission: go to its slides"><rect x="178" y="6" width="264" height="86" rx="14"></rect></g>
-        <g class="sframe" data-goto="7" data-minstep="4" tabindex="0" role="link" aria-label="Stage 2, Screening: go to its slides"><rect x="10" y="100" width="432" height="274" rx="14"></rect></g>
-        <g class="sframe" data-goto="9" data-minstep="5" tabindex="0" role="link" aria-label="Stage 3, Peer review: go to its slides"><rect x="178" y="382" width="264" height="86" rx="14"></rect></g>
-        <g class="sframe" data-goto="14" data-minstep="7" tabindex="0" role="link" aria-label="Stage 4, First decisions: go to its slides"><rect x="548" y="1" width="644" height="168" rx="14"></rect></g>
-        <g class="sframe" data-goto="15" data-minstep="11" tabindex="0" role="link" aria-label="Stage 5, Revision and final decisions: go to its slides"><rect x="743" y="194" width="449" height="360" rx="14"></rect></g>
+        <g class="sframe" data-goto="5" data-minstep="1" data-label="Stage 1 · Submission" tabindex="0" role="link" aria-label="Stage 1, Submission: go to its slides"><rect x="178" y="6" width="264" height="86" rx="14"></rect></g>
+        <g class="sframe" data-goto="7" data-minstep="4" data-label="Stage 2 · Screening" tabindex="0" role="link" aria-label="Stage 2, Screening: go to its slides"><rect x="10" y="100" width="432" height="274" rx="14"></rect></g>
+        <g class="sframe" data-goto="9" data-minstep="5" data-label="Stage 3 · Peer review" tabindex="0" role="link" aria-label="Stage 3, Peer review: go to its slides"><rect x="178" y="382" width="264" height="86" rx="14"></rect></g>
+        <g class="sframe" data-goto="14" data-minstep="7" data-label="Stage 4 · First decisions" tabindex="0" role="link" aria-label="Stage 4, First decisions: go to its slides"><rect x="548" y="1" width="644" height="168" rx="14"></rect></g>
+        <g class="sframe" data-goto="15" data-minstep="11" data-label="Stage 5 · Revise &amp; final" tabindex="0" role="link" aria-label="Stage 5, Revision and final decisions: go to its slides"><rect x="743" y="194" width="449" height="360" rx="14"></rect></g>
       </svg>
     </figure>
     <footer><span class="src">Redrawn from the official <a href="https://chi2027.acm.org/authors/papers/papers-review-process/" target="_blank" rel="noopener">CHI 2027 review-process flowchart</a></span><span class="pageno"></span></footer>
@@ -1447,6 +1447,20 @@
     else stageTag.hidden = true;
     updateSpeaker();
   }
+  // hovering a stage region also shows its name in the corner tag
+  sframes.forEach(function(f){
+    if (!f.dataset.label) return;
+    f.addEventListener('mouseenter', function(){
+      if (f.classList.contains('off')) return;
+      stageTag.textContent = f.dataset.label.replace('&amp;', '&');
+      stageTag.hidden = false;
+    });
+    f.addEventListener('mouseleave', function(){
+      var e = SEQ[seqIndex];
+      if (cur === MAP && e && e.label) { stageTag.textContent = e.label; stageTag.hidden = false; }
+      else stageTag.hidden = true;
+    });
+  });
   function syncSeq(slide1){
     for (var i = 0; i < SEQ.length; i++){
       if (SEQ[i].s === slide1) { seqIndex = i; return; }
