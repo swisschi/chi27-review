@@ -1127,10 +1127,10 @@
   </div>
   <span class="spk-msg" id="spkMsg" hidden></span>
   <div class="styles" id="styles" role="group" aria-label="Visual style"></div>
-  <div class="hint" id="hint">← → story order · ↑ ↓ by number · M map</div>
+  <div class="hint" id="hint">← → story order · ↑ ↓ by number · M map · F full screen</div>
 </div>
 <div class="hud">
-  <button id="fullBtn" aria-label="Full view" title="Full view (F)" hidden>⛶</button>
+  <button id="fullBtn" aria-label="Full view" title="Full view (F)">⛶</button>
   <button id="notesBtn" aria-label="Toggle speaker notes" title="Speaker notes (N)">N</button>
   <button id="prev" aria-label="Previous slide">←</button>
   <button id="next" aria-label="Next slide">→</button>
@@ -1214,8 +1214,8 @@
   // ---- view modes: preview (everything shown), present (step builds), speaker (present + notes window) ----
   var mode = 'present';
   var MODES = [
-    {id:'preview', label:'Preview'},
     {id:'present', label:'Present'},
+    {id:'preview', label:'Preview'},
     {id:'speaker', label:'Speaker'}
   ];
   var modeBox = document.getElementById('modes');
@@ -1269,10 +1269,9 @@
     try { localStorage.setItem('chi2027-deck-mode', m === 'speaker' ? 'present' : m); } catch(e){}
     styleBox.hidden = (mode !== 'speaker'); // visual styles, notes, and full view are speaker-only options
     document.getElementById('notesBtn').hidden = (mode !== 'speaker');
-    document.getElementById('fullBtn').hidden = (mode !== 'speaker');
-    if (mode !== 'speaker') { document.body.classList.remove('shownotes'); document.body.classList.remove('clean'); fit(); }
+    if (mode !== 'speaker') document.body.classList.remove('shownotes');
     document.getElementById('hint').textContent =
-      '← → story order · ↑ ↓ by number · M map' + (mode === 'speaker' ? ' · N notes · F full view · 1–6 style' : '');
+      '← → story order · ↑ ↓ by number · M map · F full screen' + (mode === 'speaker' ? ' · N notes · 1–6 style' : '');
     if (mode === 'preview'){
       fragActive = false;
       setMapStep(MAXSTEP);
@@ -1533,7 +1532,6 @@
   document.getElementById('notesBtn').addEventListener('click', toggleNotes);
 
   function toggleClean(){
-    if (mode !== 'speaker') return;
     var on = document.body.classList.toggle('clean');
     fit();
     if (on){
