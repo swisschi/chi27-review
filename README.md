@@ -8,4 +8,4 @@ Interactive slide deck for the SwissCHI information & discussion session on the 
 - Bottom-left: Preview / Present / Speaker views
 - Content adapted from the official [CHI 2027 website and blog posts](https://chi2027.acm.org/); when anything here differs from the official website, follow the official website.
 
-Author: Prof April Wang, ETH Zurich · [SwissCHI](https://swisschi.acm.org/)
+Author: [Prof April Wang](https://peachlab.inf.ethz.ch/), ETH Zurich · [SwissCHI](https://swisschi.acm.org/)
